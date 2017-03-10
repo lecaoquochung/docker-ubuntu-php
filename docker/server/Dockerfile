@@ -13,8 +13,8 @@ RUN apt-get update \
 RUN npm install -g pm2
 
 # Define projects working directory
-RUN mkdir -p /home/ubuntu/projects
-WORKDIR /home/ubuntu/projects
+RUN mkdir -p /home/ubuntu/docker
+WORKDIR /home/ubuntu/docker
 
 # Expose
 EXPOSE 8000
@@ -22,4 +22,4 @@ EXPOSE 8001
 EXPOSE 8080
 
 # Node
-# CMD pm2 start --no-daemon /home/ubuntu/projects/server.json
+CMD pm2 start --no-daemon /home/ubuntu/docker/node/server.json

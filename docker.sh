@@ -5,14 +5,13 @@ SCRIPT_DIR=`dirname $0`
 
 case $1 in
     --help|help)
-        echo "Usage: ./docker.sh [ps|up|down|db|ssh|build] \n\n \
-            ps      - List containers \n \
-            up      - Starts the services in the background \n \
-            down    - Stops the services, removes the containers \n \
-            db      - Open mysql \n \
-            ssh     - SSH Connect \n \
-            build   - Docker compose build \n
-        "
+        echo "Usage: ./docker.sh [up|down] \n\n \
+ps      - List containers \n \
+up      - Starts the services in the background \n \
+down    - Stops the services, removes the containers \n \
+db      - Open mysql \n \
+ssh     - SSH Connect \n \
+build   - Docker compose build \n"
         ;;
     ps)
             # Starts the docker machine and backgroud services
