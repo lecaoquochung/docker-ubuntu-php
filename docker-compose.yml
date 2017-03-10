@@ -1,0 +1,44 @@
+server:
+  dockerfile: $PWD/docker/server/Dockerfile
+  build: ./docker/server
+  links:
+    - redis
+    - mysql
+  ports:
+    - "8000:8000"
+    - "8001:8001"
+    - "8080:8080"
+  volumes:
+    - $PWD:/home/ubuntu/docker
+  environment:
+    - TERM=xterm
+    - REDIS_PORT=6379
+    - REDIS_HOST=redis
+    - DEPLOY_ENV=local
+
+mysql:
+  dockerfile: $PWD/docker/db/Dockerfile
+  build: ./docker/db
+  ports:
+    - "3306:3306"
+  environment:
+    - MYSQL_ROOT_PASSWORD=lecaoquochung
+    - MYSQL_DATABASE=docker
+    - MYSQL_USER=docker
+    - MYSQL_PASSWORD=docker
+  volumes:
+    - $PWD/docker/db/init.d:/docker-entrypoint-initdb.d
+
+redis:
+  image: redis
+  ports:
+    - "6379:6379"
+
+nginx:
+  dockerfile: $PWD/docker/server/nginxDockerfile
+  build: ./docker/server
+  links:
+    - server
+  ports:
+    - "80:80"
+    - "443:443"
