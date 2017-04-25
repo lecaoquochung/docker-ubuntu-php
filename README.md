@@ -1,5 +1,5 @@
-# docker-ubuntu-php (dockerubuntuphp)
-- master is updated with lastest version of all dependencies
+# DOCKER UBUNTU (dockerubuntu)
+- Docker ubuntu for ci development 
 
 # DEPENDENCIES
 - Ubuntu https://wiki.ubuntu.com/Releases
@@ -7,4 +7,4 @@
 - PHP https://secure.php.net/releases/
 - Node https://github.com/nodesource/distributions
 
-# MEMO
+# INIT
