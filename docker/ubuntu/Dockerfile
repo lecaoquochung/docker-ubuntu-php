@@ -17,5 +17,11 @@ RUN apt-get update \
     && pip install --upgrade --user awscli \
     && apt-get install -y ntp telnet
 
+EXPOSE 8080
 EXPOSE 8081
 EXPOSE 8082
+
+# get docker-ubuntu
+# CMD sudo chmod +x /home/ubuntu/docker-ubuntu/server.sh
+# CMD /home/ubuntu/docker-ubuntu/./server.sh
+CMD cd /home/ubuntu/docker-ubuntu/public_html; php -S 0.0.0.0:8080
