@@ -2,9 +2,30 @@ FROM ubuntu:16.04
 
 # init
 RUN apt-get update && apt-get install -y git \
-    && apt-get install -y curl \
-    # && curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/bin/composer \
-    && apt-get install -y nginx php-fpm php-mysql
+    && apt-get install -y curl 
+    
+# php
+RUN apt-get install -y nginx php-fpm php-mysql \
+    && apt-get install php7.0-mbstring \
+    && apt-get install php7.0-xml \
+    && apt-get install php7.0-cgi
+
+# composer
+RUN curl -o composer -L https://getcomposer.org/composer.phar \
+    && chmod +x composer \
+    && mv composer /usr/local/bin/
+
+# phpunit
+RUN curl -o phpunit -L https://phar.phpunit.de/phpunit-6.1.phar \
+    && chmod +x phpunit \
+    && mv phpunit /usr/local/bin/
+
+# ppm
+RUN ln -s /usr/lib/cgi-bin/php /usr/bin/php7.0-cgi
+RUN git clone https://github.com/php-pm/php-pm.git \
+    && cd php-pm \
+    && composer install \
+    && ln -s `pwd`/bin/ppm /usr/local/bin/ppm
 
 # rubygems gem sass
 RUN apt-get update \
@@ -17,11 +38,20 @@ RUN apt-get update \
     && pip install --upgrade --user awscli \
     && apt-get install -y ntp telnet
 
+RUN apt-get update \
+    && apt-get install -y python3 python3-dev python3-pip
+
+# node
+
 EXPOSE 8080
 EXPOSE 8081
 EXPOSE 8082
 
-# get docker-ubuntu
-# CMD sudo chmod +x /home/ubuntu/docker-ubuntu/server.sh
-# CMD /home/ubuntu/docker-ubuntu/./server.sh
-CMD cd /home/ubuntu/docker-ubuntu/public_html; php -S 0.0.0.0:8080
+# get server started
+# TODO php build-in server management like pm2
+CMD cd /home/ubuntu/lihoubun/public_html; php -S 0.0.0.0:8080
+# CMD cd /home/ubuntu/lihoubun/api-v1/fuel; php oil server -h=0.0.0.0 -p=8081
+
+# server.sh
+# CMD chmod +x /home/ubuntu/lihoubun/server.sh
+# CMD /home/ubuntu/lihoubun/./server.sh
