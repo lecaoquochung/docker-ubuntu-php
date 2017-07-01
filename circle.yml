@@ -1,0 +1,17 @@
+checkout:
+  post:
+    - pwd
+    - env
+    - ls
+
+dependencies:
+  post:
+    - docker-compose --version
+
+database:
+  override:
+    - mysql -u ubuntu circle_test < ./sql/lihoubun.sql
+
+test:
+  override:
+    # - php ./test-suite/run.php --unit-tests
