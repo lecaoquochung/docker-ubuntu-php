@@ -42,8 +42,8 @@ script:
   - docker-compose --version
   - ./help.sh build
   - ./help.sh up
-  - ./help.sh migrate
   - ./help.sh api v1
+  - ./help.sh oil test --group=Api
 
 notifications:
   email: me@lehungio.com

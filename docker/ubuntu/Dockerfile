@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y git \
     && apt-get install -y curl 
     
 # php
-RUN apt-get install -y nginx php-fpm php-mysql \
+RUN apt-get install -y nginx php-fpm php-mysql php-curl \
     && apt-get install php7.0-mbstring \
     && apt-get install php7.0-xml \
     && apt-get install php7.0-cgi
