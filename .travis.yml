@@ -36,6 +36,7 @@ script:
   # Get api v1 started
   - pwd
   - ls
+  - ./help.sh build
 
 notifications:
   email: me@lehungio.com
