@@ -24,9 +24,6 @@ before_script:
   # Updating from download.docker.com
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-  - sudo apt-get update
-  - sudo apt-get -y install docker-ce
-  - docker-compose --version
 
 script:
   - echo "Running test script"
@@ -36,7 +33,11 @@ script:
   # Get api v1 started
   - pwd
   - ls
+  
   # - ./help.sh build
+  - sudo apt-get update
+  - sudo apt-get -y install docker-ce
+  - docker-compose --version
 
 notifications:
   email: me@lehungio.com
