@@ -1,5 +1,8 @@
 sudo: required
 
+services:
+  - docker
+
 env:
   - DOCKER_COMPOSE_VERSION=1.4.2
 
@@ -12,8 +15,8 @@ before_install:
   - docker-compose --version
 
   # Updating from apt.dockerproject.org
-  - sudo apt-get update
-  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-engine
+  # - sudo apt-get update
+  # - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-engine
 
   # Updating from download.docker.com
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -22,9 +25,6 @@ before_install:
   - sudo apt-get -y install docker-ce
   - docker-compose --version
 
-  # Get api v1 started
-  - help.sh api v1
-
 before_script:
   - echo "Before Script"
 
@@ -32,6 +32,10 @@ script:
   - echo "Running test script"
   - date
   - env
+  
+  # Get api v1 started
+  - pwd
+  - ls
 
 notifications:
   email: me@lehungio.com
