@@ -40,6 +40,9 @@ script:
   - sudo chmod +x /usr/local/bin/docker-compose
   - docker-compose --version
   - ./help.sh build
+  - ./help.sh up
+  - ./help.sh migrate
+  - ./help.sh api v1
 
 notifications:
   email: me@lehungio.com
