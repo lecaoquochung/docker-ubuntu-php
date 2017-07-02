@@ -19,15 +19,6 @@ dependencies:
     - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
     - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
-database:
-  override:
-    - mysql -u ubuntu circle_test < ./sql/lihoubun.sql
-    - sudo /etc/init.d/mysql stop
-
-test:
-  override:
-    - pwd
-    - ls
     - sudo apt-get update
     - sudo apt-get -y install docker-ce
     - docker-compose --version
@@ -39,4 +30,15 @@ test:
     - ./help.sh up
     - ./help.sh init
     - ./help.sh php --version
+
+database:
+  override:
+    - mysql -u ubuntu circle_test < ./sql/lihoubun.sql
+    - sudo /etc/init.d/mysql stop
+
+test:
+  override:
+    - echo "Running test script"
+    - date
+    - env
     - ./help.sh oil test --group=Api

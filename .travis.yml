@@ -26,11 +26,6 @@ before_script:
   - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
   - sudo /etc/init.d/mysql stop
 
-script:
-  - echo "Running test script"
-  - date
-  - env
-  
   # Get api v1 started
   - pwd
   - ls
@@ -45,6 +40,12 @@ script:
   - ./help.sh up
   - ./help.sh init
   - ./help.sh php --version
+
+script:
+  - echo "Running test script"
+  - date
+  - env
+  
   - ./help.sh oil test --group=Api
 
 notifications:
