@@ -23,6 +23,5 @@ test:
   override:
     - ./help.sh build
     - ./help.sh up
-    - - ./help.sh init
-    - ./help.sh api v1
+    - ./help.sh init
     - ./help.sh oil test --group=Api
