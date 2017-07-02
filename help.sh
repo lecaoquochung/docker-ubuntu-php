@@ -55,8 +55,8 @@ build() {
 # Dependencies: git, composer.phar
 init() {
 	# Init api-v1
-	# docker-compose exec ubuntu /bin/bash -c "cd ./api-v1; composer install"
-    docker-compose exec ubuntu /bin/bash -c "cd ./api-v1/fuel; php oil refine install"
+	docker-compose exec ubuntu /bin/bash -c "cd ./api-v1/fuel; ./composer.phar self-update; ./composer.phar update; ./composer.phar install"
+    # docker-compose exec ubuntu /bin/bash -c "cd ./api-v1/fuel; php oil refine install"
 	
 	# Init api-v2
 }
