@@ -50,7 +50,7 @@ class Controller_Api_Public extends Controller_Rest
         }
         
         // TODO validate token
-        if (!Liho::isTokenMatch($token)) {
+        if (!LIHO::isTokenMatch($token)) {
             // response when invalide token
             $data['status'] = Config::get('ApiStatusMessageCode.invalidToken');
             

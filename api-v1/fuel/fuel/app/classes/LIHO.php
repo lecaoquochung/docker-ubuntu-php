@@ -23,7 +23,7 @@
  * @version   Release:v3.0.0
  * @link      https://github.com/lecaoquochung/liho-ubun
  */
-class Liho
+class LIHO
 {
     public static function isTokenMatch($token)
     {
