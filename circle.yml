@@ -41,16 +41,12 @@ dependencies:
     - sudo docker info
     - sudo usermod -aG docker $USER
 
-database:
-  override:
-    - mysql -u ubuntu circle_test < ./sql/lihoubun.sql
-    - sudo /etc/init.d/mysql stop
-
 test:
   override:
     - echo "Running test script"
     - date
     - env
+    - netstat -pna | grep 3306
 
     - sudo ./help.sh build
     - sudo ./help.sh up
