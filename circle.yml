@@ -3,6 +3,9 @@ machine:
     - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
   services:
     - docker
+  post:
+    - sudo service mysql stop
+    - sudo netstat -plntu 
 
 checkout:
   post:
@@ -46,9 +49,10 @@ test:
     - echo "Running test script"
     - date
     - env
-    - netstat -pna | grep 3306
+    - sudo service mysql stop
 
     - sudo ./help.sh build
+    - sudo ./help.sh down
     - sudo ./help.sh up
     - sudo ./help.sh init
     - sudo ./help.sh oil test --group=Api
