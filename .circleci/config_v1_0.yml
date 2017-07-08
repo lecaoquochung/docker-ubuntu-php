@@ -33,7 +33,7 @@ dependencies:
     # MEMO set specific verstion or latest version
     # - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
     - sudo rm /usr/local/bin/docker-compose
-    - sudo curl -L https://github.com/docker/compose/releases/download/1.8.1/docker-compose-`uname -s`-`uname -m` > docker-compose
+    - sudo curl -L https://github.com/docker/compose/releases/download/1.14.0/docker-compose-`uname -s`-`uname -m` > docker-compose
     - sudo cp docker-compose /usr/local/bin/
     - sudo chmod +x /usr/local/bin/docker-compose
     - docker-compose --version
