@@ -46,7 +46,18 @@ jobs:
       - run: |
           sudo -u root createuser -h localhost --superuser ubuntu &&
           sudo createdb -h localhost liho-ubun
-          sudo ./help.sh build
-          sudo ./help.sh up
-          sudo ./help.sh init
-          sudo ./help.sh test
+      
+      - run:
+          environment:
+            SSH_TARGET: "localhost"
+            TEST_ENV: "linux"
+          command: |
+            echo "Test Scripts"
+            date
+            env
+            pwd
+            ls
+            sudo ./help.sh build
+            sudo ./help.sh up
+            sudo ./help.sh init
+            sudo ./help.sh test
