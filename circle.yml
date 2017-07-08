@@ -53,5 +53,6 @@ test:
 
     - sudo ./help.sh build
     - sudo ./help.sh up
-    - sudo ./help.sh init
-    - sudo ./help.sh oil test --group=Api
+    - cd ./api-v1/fuel; ./composer.phar self-update; ./composer.phar update; ./composer.phar install
+    - php --version
+    - sudo php oil test --group=Api
