@@ -42,7 +42,6 @@ dependencies:
     # - sudo service docker stop
     # - sudo nohup docker daemon -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock &
     - sudo docker info
-    - sudo usermod -aG docker $USER
 
 test:
   override:
@@ -50,9 +49,9 @@ test:
     - date
     - env
     - sudo service mysql stop
+    - sudo kill -9 $(lsof -t -i:3306)
 
     - sudo ./help.sh build
-    - sudo ./help.sh down
     - sudo ./help.sh up
     - sudo ./help.sh init
     - sudo ./help.sh oil test --group=Api
