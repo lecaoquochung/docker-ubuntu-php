@@ -1,6 +1,6 @@
 machine:
   pre:
-    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
+    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.11.0
   services:
     - docker
   post:
@@ -55,4 +55,4 @@ test:
     - sudo ./help.sh up
     - cd ./api-v1/fuel; ./composer.phar self-update; ./composer.phar update; ./composer.phar install
     - php --version
-    - sudo php oil test --group=Api
+    - sudo ./heplp.sh test

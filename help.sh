@@ -36,13 +36,14 @@ cat <<EOF
 	sass: Pre-processing stylesheet file
 	api: Start API server
 	oil: Run oil cli
+	test: Run test with version
 EOF
 }
 
 # Usage
 usage() {
 	echo "Usage:"
-	echo "${0} [help|usage|build|init|up|down|restart|status|logs|ssh|db|migrate|sql|dump|restore|sass|api|oil]"
+	echo "${0} [help|usage|build|init|up|down|restart|status|logs|ssh|db|migrate|sql|dump|restore|sass|api|oil|test]"
 }
 
 # Docker compose build
@@ -194,6 +195,15 @@ run_php() {
 	docker-compose exec ubuntu /bin/bash -c "php ${PARAM1} ${PARAM2} ${PARAM3} ${PARAM4}"
 }
 
+run_test() {
+	readonly RUN_TEST_V1="php ${API_V1}/oil test --group=Api"
+
+	case $i in
+		v2) ;;
+		v1|*) docker-compose exec ubuntu /bin/bash -c "$RUN_TEST_V1";;
+	esac
+}
+
 case $1 in
 	init) init ;;
 	build) build ;;
@@ -214,5 +224,6 @@ case $1 in
 	api) server ;;
 	oil) run_oil ${2} ${3} ${4} ${5};;
 	php) run_php ${2} ${3} ${4} ${5};;
+	test) run_test ${2:-v1};;
 	*) usage ;;
 esac

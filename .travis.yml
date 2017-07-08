@@ -46,7 +46,7 @@ script:
   - date
   - env
   
-  - ./help.sh oil test --group=Api
+  - ./help.sh test
 
 notifications:
   email: me@lehungio.com
