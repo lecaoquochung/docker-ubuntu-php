@@ -1,6 +1,6 @@
 machine:
   pre:
-    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.11.0
+    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
   services:
     - docker
   post:
@@ -33,7 +33,7 @@ dependencies:
     # MEMO set specific verstion or latest version
     # - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
     - sudo rm /usr/local/bin/docker-compose
-    - sudo curl -L https://github.com/docker/compose/releases/download/1.14.0/docker-compose-`uname -s`-`uname -m` > docker-compose
+    - sudo curl -L https://github.com/docker/compose/releases/download/1.6.2/docker-compose-`uname -s`-`uname -m` > docker-compose
     - sudo cp docker-compose /usr/local/bin/
     - sudo chmod +x /usr/local/bin/docker-compose
     - docker-compose --version
@@ -53,6 +53,4 @@ test:
 
     - sudo ./help.sh build
     - sudo ./help.sh up
-    - cd ./api-v1/fuel; ./composer.phar self-update; ./composer.phar update; ./composer.phar install
-    - php --version
-    - sudo ./heplp.sh test
+    - sudo ./help.sh test
