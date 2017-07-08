@@ -37,9 +37,9 @@ services:
       MYSQL_USER: lihoubun
       MYSQL_PASSWORD: lihoubun
     expose:
-      - "3306"
+      - "3307"
     ports:
-      - "3306:3306"
+      - "3307:3307"
   
   nginx:
     build:
