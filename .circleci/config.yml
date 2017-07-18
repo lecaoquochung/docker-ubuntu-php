@@ -3,50 +3,37 @@ jobs:
   build:
     docker:
       - image: ubuntu:16.04
-
       - image: mongo:2.6.8
         command: [mongod, --smallfiles]
-
       - image: postgres:9.4.1
         # some containers require setting environment variables
         environment:
           POSTGRES_USER: root
-
       - image: redis@sha256:54057dd7e125ca41afe526a877e8bd35ec2cdd33b9217e022ed37bdcf7d09673
-
       - image: python:3.6.0
-
       - image: php:7.0
-
       - image: mysql:5.7.17
         environment:
           MYSQL_HOST: mysql.local
           MYSQL_DATABASE: lihoubun
           MYSQL_USER: lihoubun
           MYSQL_PASSWORD: lihoubun
-
     environment:
       MYSQL_HOST: mysql.local
       MYSQL_DATABASE: lihoubun
       MYSQL_USER: lihoubun
       MYSQL_PASSWORD: lihoubun
-
     working_directory: /liho-ubun
-
     branches:
       ignore:
         - develop
         - /feature-.*/
-
     steps:
       - checkout
-
       - run: command: echo 127.0.0.1 devhost | sudo tee -a /etc/hosts
-
       - run: |
         sudo -u root createuser -h localhost --superuser ubuntu &&
         sudo createdb -h localhost liho-ubun
-      
       - run:
         name: Running tests
         command: |
