@@ -31,4 +31,4 @@ jobs:
       - run:
           name: Build CLI
           command: |
-            docker-compose up
+            sh ./help.sh build
