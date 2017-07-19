@@ -22,7 +22,7 @@ jobs:
             uname -a
             env
             pwd
-            ls
+            ls -all
       - run:
           name: Check Docker
           command: |
@@ -30,4 +30,5 @@ jobs:
             docker-compose version
       - run:
           name: Build CLI
-          command: ./help.sh build
+          command: |
+            docker-compose up
