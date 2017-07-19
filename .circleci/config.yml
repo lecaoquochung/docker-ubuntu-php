@@ -32,3 +32,16 @@ jobs:
           name: Build CLI
           command: |
             sh ./help.sh build
+            sh ./help.sh up
+      - run:
+          name: Get API started
+          command: |
+            sh ./help.sh init
+            sh ./help.sh migrate
+            sh ./help.sh sql
+            sh ./help.sh restore
+            sh ./help.sh php --version
+      - run:
+          name: Test CLI
+          command: |
+            sh ./help.sh test
