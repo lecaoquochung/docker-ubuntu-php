@@ -55,10 +55,18 @@ build() {
 # Local dev update every init
 # Dependencies: git, composer.phar
 init() {
-	# Init api-v1
-	docker-compose exec ubuntu /bin/bash -c "cd ./api-v1/fuel; ./composer.phar self-update; ./composer.phar update; ./composer.phar install"
-    # docker-compose exec ubuntu /bin/bash -c "cd ./api-v1/fuel; php oil refine install"
-	
+	# Init
+	INIT1=${1}
+	readonly INIT_DEFAULT="echo ${INIT1}; cd ${API_V1}; php composer.phar self-update; php composer.phar update; php composer.phar install"
+	readonly INIT_CIRCLE_CI="echo ${INIT1}; cd api-v1/fuel; php composer.phar self-update; php composer.phar update; php composer.phar install"
+
+	case $i in
+		circleci) docker-compose exec ubuntu /bin/bash -c "$INIT_CIRCLE_CI";;
+		default|*) docker-compose exec ubuntu /bin/bash -c "$INIT_DEFAULT";;
+	esac
+
+	# TODO
+	# INIT_WINDOWS
 	# Init api-v2
 }
 
@@ -205,7 +213,7 @@ run_test() {
 }
 
 case $1 in
-	init) init ;;
+	init) init ${2:-default} ;;
 	build) build ;;
 	start|up) start ;;
 	stop|down) stop ;;
@@ -222,8 +230,8 @@ case $1 in
 	help) helps ${2:-all} ;;
 	sass) style_sass ;;
 	api) server ;;
-	oil) run_oil ${2} ${3} ${4} ${5};;
-	php) run_php ${2} ${3} ${4} ${5};;
-	test) run_test ${2:-v1};;
+	oil) run_oil ${2} ${3} ${4} ${5} ;;
+	php) run_php ${2} ${3} ${4} ${5} ;;
+	test) run_test ${2:-v1} ;;
 	*) usage ;;
 esac

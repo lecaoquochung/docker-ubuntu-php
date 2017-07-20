@@ -24,7 +24,7 @@ jobs:
             pwd
             ls -all
       - run:
-          name: Check Docker
+          name: Check docker
           command: |
             docker version
             docker-compose version
@@ -34,9 +34,9 @@ jobs:
             sh ./help.sh build
             sh ./help.sh up
       - run:
-          name: Get API started
+          name: Init CLI
           command: |
-            sh ./help.sh init
+            sh ./help.sh init circleci
             sh ./help.sh migrate
             sh ./help.sh sql
             sh ./help.sh restore
