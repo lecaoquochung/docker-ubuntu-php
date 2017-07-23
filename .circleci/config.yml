@@ -45,6 +45,10 @@ jobs:
             apt-get install -y php-fpm php-mysql php-curl
             apt-get install -y php7.0-mbstring php7.0-xml php7.0-cgi
 
+            # Install phpunit
+            curl -o phpunit -L https://phar.phpunit.de/phpunit-6.1.phar \
+            chmod +x phpunit \
+            mv phpunit /usr/local/bin/
       # 5
       - run:
           name: Check ENV after
@@ -71,6 +75,5 @@ jobs:
       # 9 Test API-V1
       - run:
           name: Test API-V1
-          pwd: /root/project/api-v1/fuel
           command: |
             php oil test --group=Api
