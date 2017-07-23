@@ -3,10 +3,10 @@ jobs:
   build:
     # $CIRCLE_WORKING_DIRECTORY
     working_directory:  ~/project
-    # The primary container is an instance of the first list image listed. Your build commands run in this container.
+    # Original Image
+    # image: docker:17.05.0-ce-git
     docker:
       - image: ubuntu:16.04
-      - image: docker:17.05.0-ce-git
     steps:
       # 1
       - checkout
@@ -29,7 +29,7 @@ jobs:
             # Install docker
             # Dependencies for install docker (lsb-release)
             # apt-get update && apt-get install ncurses-term -y
-            apt-get update && apt-get install apt-transport-https ca-certificates curl software-properties-common -y
+            apt-get update && apt-get install apt-transport-https ca-certificates curl tzdata software-properties-common -y
             curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
             add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
             # add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
@@ -41,6 +41,7 @@ jobs:
             chmod +x /usr/local/bin/docker-compose
 
             # Install php (for init source code)
+            apt-get update
             apt-get install -y php-fpm php-mysql php-curl
             apt-get install -y php7.0-mbstring php7.0-xml php7.0-cgi
 
@@ -63,12 +64,13 @@ jobs:
             ./help.sh up
       # 8
       - run:
-          name: Init CLI
+          name: Init API-V1
           pwd: /root/project/api-v1/fuel
           command:
             ./composer.phar self-update &&  ./composer.phar update && ./composer.phar install
-      # 9
+      # 9 Test API-V1
       - run:
-          name: Test CLI
+          name: Test API-V1
+          pwd: /root/project/api-v1/fuel
           command: |
-            ./help.sh test
+            php oil test --group=Api
