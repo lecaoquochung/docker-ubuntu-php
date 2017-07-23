@@ -206,10 +206,13 @@ run_php() {
 }
 
 run_test() {
+	PARAM3=${3}
 	readonly RUN_TEST_V1="php ${API_V1}/oil test --group=Api"
+	readonly CIRCLECI_TEST_V1="php ${PROJECT}/api-v1/fuel/oil test --group=Api"
 
 	case $i in
 		v2) ;;
+		v1-circleci) docker-compose exec ubuntu /bin/bash -c "$CIRCLECI_TEST_V1";;
 		v1|*) docker-compose exec ubuntu /bin/bash -c "$RUN_TEST_V1";;
 	esac
 }
@@ -234,6 +237,6 @@ case $1 in
 	api) server ;;
 	oil) run_oil ${2} ${3} ${4} ${5} ;;
 	php) run_php ${2} ${3} ${4} ${5} ;;
-	test) run_test ${2:-v1} ;;
+	test) run_test ${2:-v1} ${3} ;;
 	*) usage ;;
 esac
