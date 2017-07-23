@@ -71,4 +71,6 @@ jobs:
       - run:
           name: Test API-V1
           command: |
-            ./help.sh test v1-circleci
+            docker-compose ps
+            docker-compose logs
+            docker-compose exec ubuntu /bin/bash -c "pwd && ls"

@@ -3,6 +3,7 @@
 readonly NAME="lihoubun"
 readonly PROJECT=${PWD##*/}
 readonly PROJECT_STRIP=${PROJECT_NAME//[-._]/}
+readonly CIRCLECI_PROJECT="/root/project"
 readonly REPO="https://github.com/lecaoquochung/liho-ubun"
 readonly LIHOUBUN_PATH="/home/ubuntu/lihoubun"
 readonly LIHOUBUN_PUBLIC_PATH="/home/ubuntu/lihoubun/public_html"
@@ -208,11 +209,11 @@ run_php() {
 run_test() {
 	PARAM3=${3}
 	readonly RUN_TEST_V1="php ${API_V1}/oil test --group=Api"
-	readonly CIRCLECI_TEST_V1="php ${PROJECT}/api-v1/fuel/oil test --group=Api"
+	readonly CIRCLECI_TEST_V1="php ${CIRCLECI_PROJECT}/api-v1/fuel/oil test --group=Api"
 
 	case $i in
 		v2) ;;
-		v1-circleci) docker-compose exec ubuntu /bin/bash -c "$CIRCLECI_TEST_V1";;
+		v1_circleci) docker-compose exec ubuntu /bin/bash -c "$CIRCLECI_TEST_V1";;
 		v1|*) docker-compose exec ubuntu /bin/bash -c "$RUN_TEST_V1";;
 	esac
 }

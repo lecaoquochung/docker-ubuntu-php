@@ -49,7 +49,7 @@ EXPOSE 8082
 
 # get server started
 # TODO php build-in server management like pm2
-CMD cd /home/ubuntu/lihoubun/public_html; php -S 0.0.0.0:8080
+CMD php -S 0.0.0.0:8080
 # CMD cd /home/ubuntu/lihoubun/api-v1/fuel; php oil server -h=0.0.0.0 -p=8081
 
 # server.sh
