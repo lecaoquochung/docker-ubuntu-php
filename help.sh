@@ -1,6 +1,8 @@
 #!/bin/bash
 
 readonly NAME="lihoubun"
+readonly PROJECT=${PWD##*/}
+readonly PROJECT_STRIP=${PROJECT_NAME//[-._]/}
 readonly REPO="https://github.com/lecaoquochung/liho-ubun"
 readonly LIHOUBUN_PATH="/home/ubuntu/lihoubun"
 readonly LIHOUBUN_PUBLIC_PATH="/home/ubuntu/lihoubun/public_html"
@@ -58,7 +60,7 @@ init() {
 	# Init
 	INIT1=${1}
 	readonly INIT_DEFAULT="echo ${INIT1}; cd ${API_V1}; php composer.phar self-update; php composer.phar update; php composer.phar install"
-	readonly INIT_CIRCLE_CI="echo ${INIT1}; cd api-v1/fuel; php composer.phar self-update; php composer.phar update; php composer.phar install"
+	readonly INIT_CIRCLE_CI="echo ${INIT1}; cd ${PROJECT}/api-v1/fuel; php composer.phar self-update; php composer.phar update; php composer.phar install"
 
 	case $i in
 		circleci) docker-compose exec ubuntu /bin/bash -c "$INIT_CIRCLE_CI";;
