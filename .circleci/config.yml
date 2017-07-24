@@ -26,6 +26,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            set -x
             # Install docker
             # Dependencies for install docker (lsb-release)
             # apt-get update && apt-get install ncurses-term -y
@@ -59,7 +60,8 @@ jobs:
       # 7
       - run:
           name: Docker up
-          command:
+          command: |
+            set -x
             ./help.sh up
       # 8
       - run:
@@ -71,6 +73,7 @@ jobs:
       - run:
           name: Test API-V1
           command: |
+            set -x
             docker-compose ps
             docker-compose logs
-            docker-compose exec ubuntu /bin/bash -c "pwd && ls"
+            docker-compose exec ubuntu sh -c "ls"
