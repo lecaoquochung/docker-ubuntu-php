@@ -1,0 +1,57 @@
+machine:
+  pre:
+    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
+  services:
+    - docker
+  post:
+    - sudo service mysql stop
+    - sudo netstat -plntu 
+
+checkout:
+  post:
+    - pwd
+    - env
+    - ls
+    - uname -a
+
+dependencies:
+  post:
+    - sudo apt-get update
+    - docker-compose --version
+    - docker info
+    - docker version
+    - sudo usermod -aG docker ${USER}
+
+    # Updating from download.docker.com
+    - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" 
+
+    - sudo apt-get update
+    # - sudo apt-get -y install docker-ce
+    
+    # update latest docker compose
+    # MEMO set specific verstion or latest version
+    # - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+    - sudo rm /usr/local/bin/docker-compose
+    - sudo curl -L https://github.com/docker/compose/releases/download/1.14.0/docker-compose-`uname -s`-`uname -m` > docker-compose
+    - sudo cp docker-compose /usr/local/bin/
+    - sudo chmod +x /usr/local/bin/docker-compose
+    - docker-compose --version
+
+    # - sudo curl -sSL https://get.docker.com/ | sh
+    # - sudo service docker stop
+    # - sudo nohup docker daemon -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock &
+    - sudo docker info
+
+test:
+  override:
+    - echo "Running test script"
+    - date
+    - env
+    - sudo service mysql stop
+    - sudo kill -9 $(lsof -t -i:3306)
+
+    - sudo ./help.sh build
+    - sudo ./help.sh up
+    - sudo ./help.sh init
+    - sudo ./help.sh test

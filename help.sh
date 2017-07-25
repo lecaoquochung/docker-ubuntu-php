@@ -1,6 +1,9 @@
 #!/bin/bash
 
 readonly NAME="lihoubun"
+readonly PROJECT=${PWD##*/}
+readonly PROJECT_STRIP=${PROJECT_NAME//[-._]/}
+readonly CIRCLECI_PROJECT="/root/project"
 readonly REPO="https://github.com/lecaoquochung/liho-ubun"
 readonly LIHOUBUN_PATH="/home/ubuntu/lihoubun"
 readonly LIHOUBUN_PUBLIC_PATH="/home/ubuntu/lihoubun/public_html"
@@ -36,13 +39,14 @@ cat <<EOF
 	sass: Pre-processing stylesheet file
 	api: Start API server
 	oil: Run oil cli
+	test: Run test with version
 EOF
 }
 
 # Usage
 usage() {
 	echo "Usage:"
-	echo "${0} [help|usage|build|init|up|down|restart|status|logs|ssh|db|migrate|sql|dump|restore|sass|api|oil]"
+	echo "${0} [help|usage|build|init|up|down|restart|status|logs|ssh|db|migrate|sql|dump|restore|sass|api|oil|test]"
 }
 
 # Docker compose build
@@ -54,10 +58,18 @@ build() {
 # Local dev update every init
 # Dependencies: git, composer.phar
 init() {
-	# Init api-v1
-	# docker-compose exec ubuntu /bin/bash -c "cd ./api-v1; composer install"
-    docker-compose exec ubuntu /bin/bash -c "cd ./api-v1/fuel; php oil refine install"
-	
+	# Init
+	INIT1=${1}
+	readonly INIT_DEFAULT="echo ${INIT1}; cd ${API_V1}; php composer.phar self-update; php composer.phar update; php composer.phar install"
+	readonly INIT_CIRCLE_CI="echo ${INIT1}; cd ${PROJECT}/api-v1/fuel; php composer.phar self-update; php composer.phar update; php composer.phar install"
+
+	case $i in
+		circleci) docker-compose exec ubuntu /bin/bash -c "$INIT_CIRCLE_CI";;
+		default|*) docker-compose exec ubuntu /bin/bash -c "$INIT_DEFAULT";;
+	esac
+
+	# TODO
+	# INIT_WINDOWS
 	# Init api-v2
 }
 
@@ -182,11 +194,32 @@ run_oil() {
 	PARAM3=${3}
 	PARAM4=${4}
 
-	docker-compose exec php /bin/bash -c "php ${API_V1}/oil ${PARAM1} ${PARAM2} ${PARAM3} ${PARAM4}"
+	docker-compose exec ubuntu /bin/bash -c "php ${API_V1}/oil ${PARAM1} ${PARAM2} ${PARAM3} ${PARAM4}"
+}
+
+run_php() {
+	PARAM1=${1}
+	PARAM2=${2}
+	PARAM3=${3}
+	PARAM4=${4}
+
+	docker-compose exec ubuntu /bin/bash -c "php ${PARAM1} ${PARAM2} ${PARAM3} ${PARAM4}"
+}
+
+run_test() {
+	PARAM3=${3}
+	readonly RUN_TEST_V1="php ${API_V1}/oil test --group=Api"
+	readonly CIRCLECI_TEST_V1="php ${CIRCLECI_PROJECT}/api-v1/fuel/oil test --group=Api"
+
+	case $i in
+		v2) ;;
+		v1_circleci) docker-compose exec ubuntu /bin/bash -c "$CIRCLECI_TEST_V1";;
+		v1|*) docker-compose exec ubuntu /bin/bash -c "$RUN_TEST_V1";;
+	esac
 }
 
 case $1 in
-	init) init ;;
+	init) init ${2:-default} ;;
 	build) build ;;
 	start|up) start ;;
 	stop|down) stop ;;
@@ -203,6 +236,8 @@ case $1 in
 	help) helps ${2:-all} ;;
 	sass) style_sass ;;
 	api) server ;;
-	oil) run_oil ${2} ${3} ${4} ${5};;
+	oil) run_oil ${2} ${3} ${4} ${5} ;;
+	php) run_php ${2} ${3} ${4} ${5} ;;
+	test) run_test ${2:-v1} ${3} ;;
 	*) usage ;;
 esac

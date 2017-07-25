@@ -22,11 +22,27 @@ api-v2.lihoubun.dev
 - Run CLI
 ```
 ./help build
+./help init
 ./help up
 
 # Start api v1
 ./help api v1
 ```
+
+# API
+## V1 php7 fuelphp
+- ping: api-v1.lihoubun.dev/api/v1/ping
+## V2 php7 symfony & lavarel
+- ping: api-v2.lihoubun.dev/api/v2/ping
+## V3 hack hhmv
+- ping: api-v3.lihoubun.dev/api/v3/ping
+## V4 hack hhmv
+- ping: api-v4.lihoubun.dev/api/v4/ping
+
+# FRONT-END
+- Sass
+- Bootstrap
+- Angularjs
 
 # Reference
 - Ubuntu https://wiki.ubuntu.com/Releases

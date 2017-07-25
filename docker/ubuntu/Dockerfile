@@ -2,10 +2,15 @@ FROM ubuntu:16.04
 
 # init
 RUN apt-get update && apt-get install -y git \
-    && apt-get install -y curl 
+    && apt-get install -y curl
+
+# debconf: delaying package configuration, since apt-utils is not installed
+RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
+# debconf error in CircleCI
+RUN sed -i 's/^mesg n$/tty -s \&\& mesg n/g' /root/.profile
     
 # php
-RUN apt-get install -y nginx php-fpm php-mysql \
+RUN apt-get install -y nginx php-fpm php-mysql php-curl \
     && apt-get install php7.0-mbstring \
     && apt-get install php7.0-xml \
     && apt-get install php7.0-cgi
@@ -48,10 +53,5 @@ EXPOSE 8081
 EXPOSE 8082
 
 # get server started
-# TODO php build-in server management like pm2
-CMD cd /home/ubuntu/lihoubun/public_html; php -S 0.0.0.0:8080
-# CMD cd /home/ubuntu/lihoubun/api-v1/fuel; php oil server -h=0.0.0.0 -p=8081
-
-# server.sh
-# CMD chmod +x /home/ubuntu/lihoubun/server.sh
-# CMD /home/ubuntu/lihoubun/./server.sh
+# TODO server.sh php build-in server management like pm2
+CMD php -S 0.0.0.0:8080 public_html

@@ -1,14 +1,11 @@
 <?php
-/**
- * The development database settings. These get merged with the global settings.
- */
 
 return array(
-	'default' => array(
-		'connection'  => array(
-			'dsn'        => 'mysql:host=localhost;dbname=fuel_dev',
-			'username'   => 'root',
-			'password'   => 'root',
-		),
-	),
+    'default' => array(
+        'connection'  => array(
+            'dsn'        => 'mysql:host=' .getenv('MYSQL_HOST') .';dbname=' .getenv('MYSQL_DATABASE'),
+            'username'   => getenv('MYSQL_USER'),
+            'password'   => getenv('MYSQL_PASSWORD'),
+        ),
+    ),
 );
