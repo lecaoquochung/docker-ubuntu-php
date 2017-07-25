@@ -8,7 +8,7 @@
 - ubuntu 16.07 (nginx, curl)
 - mysql 5.7.14
 - php 7
-- fuelphp 1.8  
+- fuelphp 1.8
 - sass 3.4.23
 - python 2.7.12 & 3.5.2
 ```
@@ -36,6 +36,8 @@ api-v2.lihoubun.dev
 - ping: api-v2.lihoubun.dev/api/v2/ping
 ## V3 hack hhmv
 - ping: api-v3.lihoubun.dev/api/v3/ping
+## V4 hack hhmv
+- ping: api-v4.lihoubun.dev/api/v4/ping
 
 # FRONT-END
 - Sass
