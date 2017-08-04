@@ -13,10 +13,10 @@ jobs:
       # 2
       - setup_remote_docker
       # 3
-      - run: 
+      - run:
           name: Check ENV before
           command: |
-            echo $TERM && export TERM=xterm 
+            echo $TERM && export TERM=xterm
             echo $TERM
             uname -a
             env
@@ -76,4 +76,4 @@ jobs:
             set -x
             docker-compose ps
             docker-compose logs
-            docker-compose exec ubuntu sh -c "ls"
+            php oil test --group=Api
