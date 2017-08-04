@@ -218,6 +218,15 @@ run_test() {
 	esac
 }
 
+run_phpunit() {
+	PARAM1=${1}
+	PARAM2=${2}
+	PARAM3=${3}
+	PARAM4=${4}
+
+	docker-compose exec ubuntu /bin/bash -c "phpunit ${PARAM1} ${PARAM2} ${PARAM3} ${PARAM4}"
+}
+
 case $1 in
 	init) init ${2:-default} ;;
 	build) build ;;
@@ -239,5 +248,6 @@ case $1 in
 	oil) run_oil ${2} ${3} ${4} ${5} ;;
 	php) run_php ${2} ${3} ${4} ${5} ;;
 	test) run_test ${2:-v1} ${3} ;;
+	phpunit) run_phpunit ${2} ${3} ${4} ${5} ;;
 	*) usage ;;
 esac
