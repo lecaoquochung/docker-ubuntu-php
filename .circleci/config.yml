@@ -75,5 +75,4 @@ jobs:
           command: |
             set -x
             docker-compose ps
-            docker-compose logs
-            php oil test --group=Api
+            php /root/project/api-v1/fuel/oil test --group=Api
