@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y git \
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 # debconf error in CircleCI
 RUN sed -i 's/^mesg n$/tty -s \&\& mesg n/g' /root/.profile
-    
+
 # php
 RUN apt-get install -y nginx php-fpm php-mysql php-curl \
     && apt-get install php7.0-mbstring \
@@ -54,4 +54,4 @@ EXPOSE 8082
 
 # get server started
 # TODO server.sh php build-in server management like pm2
-CMD php -S 0.0.0.0:8080 public_html
+CMD php -S 0.0.0.0:8080 -t public_html
