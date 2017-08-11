@@ -1,0 +1,78 @@
+version: 2
+jobs:
+  build:
+    # $CIRCLE_WORKING_DIRECTORY
+    working_directory:  ~/project
+    # Original Image
+    # image: docker:17.05.0-ce-git
+    docker:
+      - image: ubuntu:16.04
+    steps:
+      # 1
+      - checkout
+      # 2
+      - setup_remote_docker
+      # 3
+      - run:
+          name: Check ENV before
+          command: |
+            echo $TERM && export TERM=xterm
+            echo $TERM
+            uname -a
+            env
+            pwd
+            ls -all
+      # 4
+      - run:
+          name: Install dependencies
+          command: |
+            set -x
+            # Install docker
+            # Dependencies for install docker (lsb-release)
+            # apt-get update && apt-get install ncurses-term -y
+            apt-get update && apt-get install apt-transport-https ca-certificates curl tzdata software-properties-common -y
+            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+            add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
+            # add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+            apt-get update
+            apt-get -y install docker-ce
+
+            # Install docker-compose
+            curl -L https://github.com/docker/compose/releases/download/1.14.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+            chmod +x /usr/local/bin/docker-compose
+
+            # Install php (for init source code)
+            apt-get update
+            apt-get install -y php-fpm php-mysql php-curl
+            apt-get install -y php7.0-mbstring php7.0-xml php7.0-cgi
+      # 5
+      - run:
+          name: Check ENV after
+          command: |
+            docker version
+            docker-compose version
+            pwd
+      # 6
+      - run:
+          name: Build CLI
+          command:
+            ./help.sh build
+      # 7
+      - run:
+          name: Docker up
+          command: |
+            set -x
+            ./help.sh up
+      # 8
+      - run:
+          name: Init API-V1
+          pwd: /root/project/api-v1/fuel
+          command:
+            ./composer.phar self-update &&  ./composer.phar update && ./composer.phar install
+      # 9 Test API-V1
+      - run:
+          name: Test API-V1
+          command: |
+            set -x
+            docker-compose ps
+            php /root/project/api-v1/fuel/oil test --group=Api
