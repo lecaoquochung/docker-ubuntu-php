@@ -1,3 +1,6 @@
+[![Build status](https://circleci.com/gh/lecaoquochung/liho-ubun.svg?style=shield)](https://circleci.com/gh/lecaoquochung/liho-ubun)
+[![Build status](https://travis-ci.org/travis-ci/docs-travis-ci-com.svg?branch=master)](https://travis-ci.org/lecaoquochung/liho-ubun)
+
 # LIHO-UBUN (lihoubun)
 - Docker ubuntu for api development
 
@@ -19,6 +22,7 @@
 api-v1.lihoubun.dev
 api-v2.lihoubun.dev
 ```
+
 - Run CLI
 ```
 ./help build
