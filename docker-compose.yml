@@ -17,13 +17,13 @@ services:
     environment:
       ENV_SMTP_HOST: smtp.sendgrid.net
       ENV_SMTP_PORT: 587
-      ENV_SMTP_USER: lihoubun
-      ENV_SMTP_PASS: lihoubun
+      ENV_SMTP_USER: liho
+      ENV_SMTP_PASS: liho
       LANG: ja_JP.UTF-8
       MYSQL_HOST: mysql.local
-      MYSQL_DATABASE: lihoubun
-      MYSQL_USER: lihoubun
-      MYSQL_PASSWORD: lihoubun
+      MYSQL_DATABASE: liho
+      MYSQL_USER: liho
+      MYSQL_PASSWORD: liho
 
   mysql:
     build:
@@ -33,14 +33,14 @@ services:
       - ".:/home/ubuntu/lihoubun"
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: lihoubun
-      MYSQL_USER: lihoubun
-      MYSQL_PASSWORD: lihoubun
+      MYSQL_DATABASE: liho
+      MYSQL_USER: liho
+      MYSQL_PASSWORD: liho
     expose:
       - "3306"
     ports:
       - "3306:3306"
-  
+
   nginx:
     build:
       context: .

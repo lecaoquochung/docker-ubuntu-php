@@ -2,13 +2,14 @@
 
 readonly NAME="lihoubun"
 readonly PROJECT=${PWD##*/}
-readonly PROJECT_STRIP=${PROJECT_NAME//[-._]/}
+readonly PROJECT_NAME=${PROJECT//[-._]/}
 readonly CIRCLECI_PROJECT="/root/project"
 readonly REPO="https://github.com/lecaoquochung/liho-ubun"
 readonly LIHOUBUN_PATH="/home/ubuntu/lihoubun"
 readonly LIHOUBUN_PUBLIC_PATH="/home/ubuntu/lihoubun/public_html"
-readonly API_V1="/home/ubuntu/lihoubun/api-v1/fuel"
+readonly API_V1="/home/ubuntu/lihoubun/api-v1"
 readonly API_V2="/home/ubuntu/lihoubun/api-v2"
+readonly PHP_EXERCISM="/home/ubuntu/lihoubun/php"
 readonly LOCALHOST="127.0.0.1"
 
 helps() {
@@ -21,7 +22,7 @@ allhelps() {
 cat <<EOF
 	help: Show help
 	usage: Show simple usage
-	
+
     [Containers]
 	build: Build docker service
 	init: Initialize development environment; including install composer dependencies
@@ -60,7 +61,7 @@ build() {
 init() {
 	# Init
 	INIT1=${1}
-	readonly INIT_DEFAULT="echo ${INIT1}; cd ${API_V1}; php composer.phar self-update; php composer.phar update; php composer.phar install"
+	readonly INIT_DEFAULT="echo ${INIT1}; cd ${API_V1}/fuel; php composer.phar self-update; php composer.phar update; php composer.phar install"
 	readonly INIT_CIRCLE_CI="echo ${INIT1}; cd ${PROJECT}/api-v1/fuel; php composer.phar self-update; php composer.phar update; php composer.phar install"
 
 	case $i in
@@ -80,8 +81,8 @@ start() {
 
 # Docker compose down
 stop() {
-	docker-compose down 
-	docker volume rm ${NAME}_mysql-data
+	docker-compose down
+	docker volume rm ${PROJECT_NAME}_mysql-data
 }
 
 # Docker compose restart
@@ -132,7 +133,7 @@ db_migration() {
 	# migrate
 	readonly MIGRATE_DB="php ${API_V1}/oil r migrate:current --all"
 	readonly MIGRATE_DB_API_V2=""
-	
+
     case $1 in
 		v2) docker-compose exec ubuntu /bin/bash -c "$MIGRATE_DB_API_V2" ;;
 		v1|*) docker-compose exec ubuntu /bin/bash -c "$MIGRATE_DB" ;;
@@ -143,7 +144,7 @@ db_migration() {
 db_migration_sql() {
 	# migrate
 	readonly DUMP_SQL="mysql -u${NAME} -p${NAME} ${NAME} < ${LIHOUBUN_PATH}/sql/${NAME}.sql"
-	
+
     docker-compose exec mysql /bin/bash -c "$DUMP_SQL"
 }
 
@@ -151,7 +152,7 @@ db_migration_sql() {
 db_dump() {
 	readonly DUMP_DB="mysqldump -u${NAME} -p${NAME} ${NAME} > ${LIHOUBUN_PATH}/sql/`date +%Y%m%d`_${NAME}.sql"
 	readonly DUMP_DB_LATEST="mysqldump -u${NAME} -p${NAME} ${NAME} > ${LIHOUBUN_PATH}/sql/tmp.sql"
-	
+
     docker-compose exec mysql /bin/bash -c "$DUMP_DB"
 	docker-compose exec mysql /bin/bash -c "$DUMP_DB_LATEST"
 }
@@ -160,7 +161,7 @@ db_dump() {
 db_restore() {
 	readonly RESTORE_DB="mysql -u${NAME} -p${NAME} ${NAME} < ${LIHOUBUN_PATH}/sql/${NAME}.sql"
 	readonly RESTORE_INPUT_DB="mysql -u${NAME} -p${NAME} ${NAME} < ${LIHOUBUN_PATH}/sql/${2}"
-	
+
     case $1 in
 		-i) docker-compose exec mysql /bin/bash -c "$RESTORE_INPUT_DB" ;;
 		${NAME}.sql|*) docker-compose exec mysql /bin/bash -c "$RESTORE_DB" ;;
@@ -170,7 +171,7 @@ db_restore() {
 # stylesheet
 style_sass() {
 	readonly SASS_PREPROCESSING="sass ${LIHOUBUN_PUBLIC_PATH}/css/stylesheet.scss ${LIHOUBUN_PUBLIC_PATH}/css/stylesheet.css"
-	
+
     docker-compose exec ubuntu /bin/bash -c "$SASS_PREPROCESSING"
 }
 
@@ -208,7 +209,7 @@ run_php() {
 
 run_test() {
 	PARAM3=${3}
-	readonly RUN_TEST_V1="php ${API_V1}/oil test --group=Api"
+	readonly RUN_TEST_V1="php ${API_V1}/fuel/oil test --group=Api"
 	readonly CIRCLECI_TEST_V1="php ${CIRCLECI_PROJECT}/api-v1/fuel/oil test --group=Api"
 
 	case $i in
@@ -216,6 +217,15 @@ run_test() {
 		v1_circleci) docker-compose exec ubuntu /bin/bash -c "$CIRCLECI_TEST_V1";;
 		v1|*) docker-compose exec ubuntu /bin/bash -c "$RUN_TEST_V1";;
 	esac
+}
+
+run_phpunit() {
+	PARAM1=${1}
+	PARAM2=${2}
+	PARAM3=${3}
+	PARAM4=${4}
+
+	docker-compose exec ubuntu /bin/bash -c "phpunit ${PARAM1} ${PARAM2} ${PARAM3} ${PARAM4}"
 }
 
 case $1 in
@@ -239,5 +249,6 @@ case $1 in
 	oil) run_oil ${2} ${3} ${4} ${5} ;;
 	php) run_php ${2} ${3} ${4} ${5} ;;
 	test) run_test ${2:-v1} ${3} ;;
+	phpunit) run_phpunit ${2} ${3} ${4} ${5} ;;
 	*) usage ;;
 esac
