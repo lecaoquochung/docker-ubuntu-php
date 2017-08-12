@@ -13,24 +13,30 @@ jobs:
           MYSQL_PASSWORD: liho
     steps:
       - checkout
-      - run: pwd
-      - run: ls
-      - run: php -v
+      # API-V1
       - run:
           name: Init api-v1
           pwd: ./api-v1/fuel
           command: |
-            pwd
-            ls
-            php ./composer.phar self-update
             php ./composer.phar install
             php oil r install
       - run:
           name: Test api-v1
           command: |
-            pwd
-            ls
             php ./api-v1/fuel/oil test --group=Public
+      # PHP Exercism
+      - run:
+          name: Init PHP Exercism
+          pwd: ./php
+          command: |
+            sudo apt-get install -y wget
+            ./install_composer.sh
+            php ./composer.phar install
+      - run:
+          name: Test PHP Exercism
+          pwd: ./php
+          command: |
+            ./vendor/phpunit/phpunit/phpunit  hello-world/hello-world_test.php
 
   test:
     docker:

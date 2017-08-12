@@ -11,4 +11,5 @@ exercism submit PATH_TO_FILE
 - Hello world
 ```
 exercism fetch php hello-world
+exercism submit hello-world/hello-world.php 
 ```
