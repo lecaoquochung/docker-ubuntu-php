@@ -1,5 +1,8 @@
+[![Build status](https://circleci.com/gh/lecaoquochung/liho-ubun.svg?style=shield)](https://circleci.com/gh/lecaoquochung/liho-ubun)
+[![Build status](https://travis-ci.org/travis-ci/docs-travis-ci-com.svg?branch=master)](https://travis-ci.org/lecaoquochung/liho-ubun)
+
 # LIHO-UBUN (lihoubun)
-- Docker ubuntu for api development 
+- Docker ubuntu for api development
 
 # Dependencies
 - Package included
@@ -19,6 +22,7 @@
 api-v1.lihoubun.dev
 api-v2.lihoubun.dev
 ```
+
 - Run CLI
 ```
 ./help build
@@ -28,6 +32,10 @@ api-v2.lihoubun.dev
 # Start api v1
 ./help api v1
 ```
+
+# Local development
+- public_html
+http://localhost:8080
 
 # API
 ## V1 php7 fuelphp
@@ -43,6 +51,7 @@ api-v2.lihoubun.dev
 - Sass
 - Bootstrap
 - Angularjs
+
 
 # Reference
 - Ubuntu https://wiki.ubuntu.com/Releases

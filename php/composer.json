@@ -1,0 +1,16 @@
+{
+    "name": "lecaoquochung/php",
+    "description": "PHP Exercism",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "HL",
+            "email": "lecaoquochung@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^6.2"
+    }
+}
