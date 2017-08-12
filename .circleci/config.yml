@@ -20,6 +20,7 @@ jobs:
           command: |
             php ./composer.phar install
             php oil r install
+            php oil r migrate
       - run:
           name: Test api-v1
           command: |

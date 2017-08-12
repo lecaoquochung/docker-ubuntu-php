@@ -40,12 +40,20 @@ http://localhost:8080
 # API
 ## V1 php7 fuelphp
 - ping: api-v1.lihoubun.dev/api/v1/ping
-## V2 php7 symfony & lavarel
+## V2 php7 symfony
 - ping: api-v2.lihoubun.dev/api/v2/ping
-## V3 hack hhmv
+## V3 php7 lavarel
 - ping: api-v3.lihoubun.dev/api/v3/ping
-## V4 hack hhmv
+## V4 php7 cakephp
 - ping: api-v4.lihoubun.dev/api/v4/ping
+## V5 python django
+- ping: api-v5.lihoubun.dev/api/v5/ping
+## V6 java spring
+- ping: api-v6.lihoubun.dev/api/v6/ping
+## V7 hack hhmv
+- ping: api-v7.lihoubun.dev/api/v7/ping
+## V8 nodejs express
+- ping: api-v8.lihoubun.dev/api/v8/ping
 
 # FRONT-END
 - Sass
