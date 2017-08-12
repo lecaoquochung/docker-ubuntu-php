@@ -9,6 +9,7 @@ readonly LIHOUBUN_PATH="/home/ubuntu/lihoubun"
 readonly LIHOUBUN_PUBLIC_PATH="/home/ubuntu/lihoubun/public_html"
 readonly API_V1="/home/ubuntu/lihoubun/api-v1"
 readonly API_V2="/home/ubuntu/lihoubun/api-v2"
+readonly PHP_EXERCISM="/home/ubuntu/lihoubun/php"
 readonly LOCALHOST="127.0.0.1"
 
 helps() {
