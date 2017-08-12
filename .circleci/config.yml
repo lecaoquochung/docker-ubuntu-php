@@ -14,11 +14,23 @@ jobs:
     steps:
       - checkout
       - run: pwd
+      - run: ls
       - run: php -v
-      - run: php ./composer.phar self-update
-      - run: php ./composer.phar install
-      - run: php oil r install
-      - run: php oil test --group=Playground
+      - run:
+          name: Init api-v1
+          pwd: ./api-v1/fuel
+          command: |
+            pwd
+            ls
+            php ./composer.phar self-update
+            php ./composer.phar install
+            php oil r install
+      - run:
+          name: Test api-v1
+          command: |
+            pwd
+            ls
+            php ./api-v1/fuel/oil test --group=Public
 
   test:
     docker:

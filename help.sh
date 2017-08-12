@@ -7,7 +7,7 @@ readonly CIRCLECI_PROJECT="/root/project"
 readonly REPO="https://github.com/lecaoquochung/liho-ubun"
 readonly LIHOUBUN_PATH="/home/ubuntu/lihoubun"
 readonly LIHOUBUN_PUBLIC_PATH="/home/ubuntu/lihoubun/public_html"
-readonly API_V1="/home/ubuntu/lihoubun/api-v1/fuel"
+readonly API_V1="/home/ubuntu/lihoubun/api-v1"
 readonly API_V2="/home/ubuntu/lihoubun/api-v2"
 readonly LOCALHOST="127.0.0.1"
 
@@ -60,7 +60,7 @@ build() {
 init() {
 	# Init
 	INIT1=${1}
-	readonly INIT_DEFAULT="echo ${INIT1}; cd ${API_V1}; php composer.phar self-update; php composer.phar update; php composer.phar install"
+	readonly INIT_DEFAULT="echo ${INIT1}; cd ${API_V1}/fuel; php composer.phar self-update; php composer.phar update; php composer.phar install"
 	readonly INIT_CIRCLE_CI="echo ${INIT1}; cd ${PROJECT}/api-v1/fuel; php composer.phar self-update; php composer.phar update; php composer.phar install"
 
 	case $i in
@@ -208,7 +208,7 @@ run_php() {
 
 run_test() {
 	PARAM3=${3}
-	readonly RUN_TEST_V1="php ${API_V1}/oil test --group=Api"
+	readonly RUN_TEST_V1="php ${API_V1}/fuel/oil test --group=Api"
 	readonly CIRCLECI_TEST_V1="php ${CIRCLECI_PROJECT}/api-v1/fuel/oil test --group=Api"
 
 	case $i in
