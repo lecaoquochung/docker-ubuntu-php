@@ -178,7 +178,7 @@ style_sass() {
 
 # API Server
 server() {
-	readonly START_API_V1="cd ${API_V1}; php oil server -h=0.0.0.0 -p=8081"
+	readonly START_API_V1="cd ${API_V1}/fuel; php ${API_V1}/fuel/oil server -h=0.0.0.0 -p=8081"
 
     case $i in
 		v2) ;;
