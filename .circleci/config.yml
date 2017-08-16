@@ -37,6 +37,7 @@ jobs:
             php oil r install
             php oil r migrate --help
             php oil r migrate --all -v
+            php oil r migrate:current
       - run:
           name: Test api-v1
           command: |
