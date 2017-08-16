@@ -18,7 +18,9 @@ jobs:
       # Dependencies
       - run:
           name: Install System Dependencies
-          command: sudo apt-get update -qq && sudo apt-get install -y build-essential mysql-server
+          command: |
+            sudo apt-get update -qq
+            sudo apt-get install -y build-essential mysql-server
       # Set up db
       - run:
           name: Set up db
@@ -33,11 +35,9 @@ jobs:
           pwd: ./api-v1/fuel
           command: |
             env
+            php -v
             php ./composer.phar install
             php oil r install
-            php oil r migrate --help
-            php oil r migrate --all -v
-            php oil r migrate:current
       - run:
           name: Test api-v1
           command: |
