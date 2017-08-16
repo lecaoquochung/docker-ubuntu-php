@@ -7,17 +7,31 @@ jobs:
       - image: circleci/php:7.1
     # The secondary container is an instance of the second listed image which is run in a common network where ports exposed on the primary container are available on localhost.
       - image: circleci/mysql:5.7.17
-        environment:
-          MYSQL_DATABASE: liho
-          MYSQL_USER: liho
-          MYSQL_PASSWORD: liho
+        env:
+          - MYSQL_ALLOW_EMPTY_PASSWORD=true
+          - MYSQL_HOST=127.0.0.1
+          - MYSQL_DATABASE=liho
+          - MYSQL_USER=liho
+          - MYSQL_PASSWORD=liho
+          - MYSQL_ROOT_HOST=%
     steps:
       - checkout
+      # Dependencies
+      - run:
+          name: Install System Dependencies
+          command: sudo apt-get update -qq && sudo apt-get install -y build-essential mysql-server
+      # Set up db
+      - run:
+          name: Set up db
+          command: |
+            mysql --version
+            echo "CREATE USER 'liho'@'127.0.0.1' IDENTIFIED BY 'liho';" | mysql -u root --password="" -h 127.0.0.1
       # API-V1
       - run:
           name: Init api-v1
           pwd: ./api-v1/fuel
           command: |
+            env
             php ./composer.phar install
             php oil r install
       - run:
@@ -47,7 +61,6 @@ jobs:
       - run:
           name: Test
           command: php oil r install
-          command: php oil r migrate
 
 workflows:
   version: 2

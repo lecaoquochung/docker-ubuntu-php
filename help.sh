@@ -195,7 +195,7 @@ run_oil() {
 	PARAM3=${3}
 	PARAM4=${4}
 
-	docker-compose exec ubuntu /bin/bash -c "php ${API_V1}/oil ${PARAM1} ${PARAM2} ${PARAM3} ${PARAM4}"
+	docker-compose exec ubuntu /bin/bash -c "php ${API_V1}/fuel/oil ${PARAM1} ${PARAM2} ${PARAM3} ${PARAM4}"
 }
 
 run_php() {
